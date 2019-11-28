@@ -7,6 +7,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -22,7 +24,7 @@ public class StepDefinitions {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Nexus_5X_API_29_x86");
-        capabilities.setCapability(MobileCapabilityType.APP, "C:\\Users\\Furkan\\Desktop\\mobiletest\\apks\\Sample Android App Login Test_v4.0.apk");
+        capabilities.setCapability(MobileCapabilityType.APP, new File("apks/Sample Android App Login Test_v4.0.apk").getAbsolutePath());
         capabilities.setCapability(MobileCapabilityType.UDID, "emulator-5554");
         capabilities.setCapability("appWaitPackage", "com.loginmodule.learning");
         capabilities.setCapability("appWaitActivity", "com.loginmodule.learning.activities.LoginActivity");
