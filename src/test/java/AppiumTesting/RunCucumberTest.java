@@ -5,7 +5,9 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = "pretty", features = "src/test/resources/AppiumTesting")
+@CucumberOptions(
+        features = {"src/test/resources/AppiumTesting"},
+        plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"})
 public class RunCucumberTest {
 
 }
