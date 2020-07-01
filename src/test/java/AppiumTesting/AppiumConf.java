@@ -4,6 +4,7 @@ public class AppiumConf {
 
     public String appiumUrl;
     public String uuid;
+    public String apkPath;
 
     public String getAppiumUrl() {
         return appiumUrl;
@@ -21,6 +22,14 @@ public class AppiumConf {
         this.uuid = uuid;
     }
 
+    public String getApkPath() {
+        return apkPath;
+    }
+
+    public void setApkPath(String apkPath) {
+        this.apkPath = apkPath;
+    }
+
     public AppiumConf() {
         super();
     }
@@ -30,6 +39,7 @@ public class AppiumConf {
         return "AppiumConf{" +
                 "appiumUrl='" + appiumUrl + '\'' +
                 ", uuid='" + uuid + '\'' +
+                ", apkPath='" + apkPath + '\'' +
                 '}';
     }
 }

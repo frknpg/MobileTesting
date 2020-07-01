@@ -36,7 +36,7 @@ public class StepDefinitions {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Nexus_5X_API_29_x86");
-        capabilities.setCapability(MobileCapabilityType.APP, new File("apks/Sample Android App Login Test_v4.0.apk").getAbsolutePath());
+        capabilities.setCapability(MobileCapabilityType.APP, appiumConf.apkPath);
         capabilities.setCapability(MobileCapabilityType.UDID, appiumConf.uuid);
         capabilities.setCapability("appWaitPackage", "com.loginmodule.learning");
         capabilities.setCapability("appWaitActivity", "com.loginmodule.learning.activities.LoginActivity");
