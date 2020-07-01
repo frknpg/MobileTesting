@@ -1,5 +1,6 @@
 package AppiumTesting;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.cucumber.java.Before;
@@ -9,6 +10,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -21,16 +23,26 @@ public class StepDefinitions {
     @Before
     public void startAppium() {
         //TODO: Cihazdan cihaza farklılık gösterecek bilgiler json formatında bir config dosyası ile dışardan alınmalıdır.
+        ObjectMapper objectMapper = new ObjectMapper();
+        AppiumConf appiumConf = new AppiumConf();
+;        try {
+            appiumConf = objectMapper.readValue(new File("src/test/resources/config/appium.json"), AppiumConf.class);
+            System.out.println(appiumConf.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Nexus_5X_API_29_x86");
         capabilities.setCapability(MobileCapabilityType.APP, new File("apks/Sample Android App Login Test_v4.0.apk").getAbsolutePath());
-        capabilities.setCapability(MobileCapabilityType.UDID, "emulator-5554");
+        capabilities.setCapability(MobileCapabilityType.UDID, appiumConf.uuid);
         capabilities.setCapability("appWaitPackage", "com.loginmodule.learning");
         capabilities.setCapability("appWaitActivity", "com.loginmodule.learning.activities.LoginActivity");
 
         try {
-            driver = new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"),
+            driver = new AppiumDriver(new URL(appiumConf.appiumUrl),
                     capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
