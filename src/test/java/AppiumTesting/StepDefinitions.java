@@ -2,7 +2,9 @@ package AppiumTesting;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,8 +15,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Path;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class StepDefinitions {
 
@@ -22,16 +26,14 @@ public class StepDefinitions {
 
     @Before
     public void startAppium() {
-        //TODO: Cihazdan cihaza farklılık gösterecek bilgiler json formatında bir config dosyası ile dışardan alınmalıdır.
         ObjectMapper objectMapper = new ObjectMapper();
         AppiumConf appiumConf = new AppiumConf();
-;        try {
+        try {
             appiumConf = objectMapper.readValue(new File("src/test/resources/config/appium.json"), AppiumConf.class);
             System.out.println(appiumConf.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
@@ -42,27 +44,37 @@ public class StepDefinitions {
         capabilities.setCapability("appWaitActivity", "com.loginmodule.learning.activities.LoginActivity");
 
         try {
-            driver = new AppiumDriver(new URL(appiumConf.appiumUrl),
-                    capabilities);
+            driver = new AppiumDriver(new URL(appiumConf.appiumUrl), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     }
 
-
     @Given("^Start the application$")
     public void startApplication() {
         driver.launchApp();
     }
 
-    @When("^This is the first step$")
-    public void firstStep() {
+    @When("^I click the register button$")
+    public void clickRegisterButton() {
+        MobileElement el = (MobileElement) driver.findElementById("com.loginmodule.learning:id/textViewLinkRegister");
+        el.click();
+    }
 
+    @Then("^I see the register button$")
+    public void seeRegisterButton() {
+        List<MobileElement> elementList = (List<MobileElement>) driver.findElementsById(("com.loginmodule.learning:id/appCompatButtonRegister"));
+        assertFalse(elementList.isEmpty());
     }
 
     @Then("^Wait (\\d+) second$")
     public void waitTime(int time) throws InterruptedException {
         Thread.sleep(time);
+    }
+
+    @After
+    public void killSession() {
+        driver.quit();
     }
 }

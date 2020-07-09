@@ -19,7 +19,6 @@ targetCompatibility = 1.8
 group 'com.frknpg'
 version '1.0-SNAPSHOT'
 
-// Versioning of dependencies
 wrapper.gradleVersion = '5.5.1'
 def cucumberVersion = '4.7.4'
 def junitVersion = '5.5.0'
@@ -43,7 +42,6 @@ dependencies {
 
     testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
     testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
-
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${junitVersion}"
