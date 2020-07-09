@@ -1,5 +1,5 @@
 @start
-Feature: Is it Friday yet?
+Feature: Android Register
 
   Scenario: Start Test Application
     Given Start the application
